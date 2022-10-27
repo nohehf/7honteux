@@ -1,4 +1,5 @@
 <script lang="ts">
+	import '../app.scss';
 	import { Game } from '../logic/Game';
 	import GameForm from '../components/game-form.svelte';
 
@@ -15,7 +16,7 @@
 	};
 </script>
 
-<h1>GRIFISA</h1>
+<h1>7honteux</h1>
 
 {#if game.state === 'start'}
 	<button on:click={startGame}>START TEST</button>
@@ -32,3 +33,8 @@
 		})}
 	</p>
 {/if}
+
+<footer>7honteux®️ - v0.0.2</footer>
+
+<style lang="scss">
+</style>
