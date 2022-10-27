@@ -38,7 +38,7 @@
 		</p>
 	{/if}
 </div>
-<footer>7honteux®️ - v0.0.2</footer>
+<footer>7honteux®️ - v0.0.3</footer>
 
 <style lang="scss">
 	nav {
