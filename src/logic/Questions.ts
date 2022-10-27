@@ -33,12 +33,12 @@ export class YesNoQuestion implements Question {
 	q: string;
 	category: Categories;
 	type = QuestionType.YES_NO;
-	choices: [{ text: 'yes'; score: number }, { text: 'no'; score: 0 | number }];
+	choices: [{ text: 'oui'; score: number }, { text: 'non'; score: 0 | number }];
 
 	constructor(
 		q: string,
 		category: Categories,
-		choices: [{ text: 'yes'; score: number }, { text: 'no'; score: 0 | number }]
+		choices: [{ text: 'oui'; score: number }, { text: 'non'; score: 0 | number }]
 	) {
 		this.q = q;
 		this.category = category;
@@ -78,12 +78,12 @@ export class NumberRangeQuestion implements Question {
 
 export const questions: Question[] = [
 	new YesNoQuestion("Avez vous déjà bu de l'alcool ?", Categories.ALCOHOL, [
-		{ text: 'yes', score: 1 },
-		{ text: 'no', score: 0 }
+		{ text: 'oui', score: 1 },
+		{ text: 'non', score: 0 }
 	]),
 	new YesNoQuestion('Avez vous déjà été ivre ?', Categories.ALCOHOL, [
-		{ text: 'yes', score: 1 },
-		{ text: 'no', score: 0 }
+		{ text: 'oui', score: 1 },
+		{ text: 'non', score: 0 }
 	]),
 	new NumberRangeQuestion(
 		'Combien de fois par semaine buvez vous ?',

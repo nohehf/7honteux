@@ -1,11 +1,35 @@
-html,
+// Use a soft reset
+@import 'sanitize.css/sanitize.css';
+@import 'sanitize.css/assets.css';
+@import 'sanitize.css/forms.css';
+@import 'sanitize.css/typography.css';
+
+:root,
 body {
 	font-family: 'inter';
+	height: 100%;
+}
+
+#svelte {
+	display: flex;
+	flex-direction: column;
+	height: 100%;
 }
 
 button {
+	font-weight: bold;
 	padding: 1rem 2rem;
+	border-radius: 1rem;
 	border: none;
 	color: white;
 	background-color: #26b8f6;
+	box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px,
+		rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset;
+
+	&.red {
+		background-color: #3ed15e;
+	}
+	&.green {
+		background-color: #e3631b;
+	}
 }
