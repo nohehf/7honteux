@@ -1,7 +1,8 @@
 import { Question, questions, type Categories } from './Questions';
 
+export type Score = { [category in Categories]: number };
 export class Game {
-	public score: { [category in Categories]: number };
+	public score: Score;
 	private questions: Question[];
 	public state: 'start' | 'playing' | 'end';
 	public currentQuestion: Question | null = null;

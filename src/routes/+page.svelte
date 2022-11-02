@@ -3,6 +3,7 @@
 	import { Game } from '../logic/Game';
 	import GameForm from '../components/game-form.svelte';
 	import logo from '../assets/logo.png';
+	import Results from '../components/results.svelte';
 
 	$: game = new Game();
 
@@ -27,15 +28,7 @@
 	{:else if game.state === 'playing' && game.currentQuestion}
 		<GameForm question={game.currentQuestion} on:answer={handleAnswer} />
 	{:else if game.state === 'end'}
-		<p>Votre score:</p>
-		{#each Object.entries(game.score) as [category, score]}
-			<p>{category}: {score}</p>
-		{/each}
-		<p>
-			Total: {Object.values(game.score).reduce((curr, next) => {
-				return curr + next;
-			})}
-		</p>
+		<Results scores={game.score} />
 	{/if}
 </div>
 <footer>7honteux®️ - v0.0.3</footer>
@@ -53,7 +46,7 @@
 		}
 	}
 	.wrapper {
-		height: 100%;
+		padding: 5rem 0;
 		display: flex;
 		flex-direction: column;
 		align-items: center;
