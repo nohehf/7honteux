@@ -5,6 +5,7 @@
 	import logo from '../assets/logo.png';
 	import Results from '../components/results.svelte';
 	import CompletionBar from '../components/completion-bar.svelte';
+	import SubmitForm from '../components/submit-form.svelte';
 
 	$: game = new Game();
 
@@ -32,6 +33,8 @@
 </nav>
 
 <div class="wrapper">
+
+	<SubmitForm score={game.score} version={game.version}></SubmitForm>
 	{#if game.state === 'start'}
 		<button on:click={startGame}>START TEST</button>
 	{:else if game.state === 'playing' && game.currentQuestion}
@@ -44,7 +47,7 @@
 		<Results scores={game.score} />
 	{/if}
 </div>
-<footer>7honteux®️ - v0.0.4</footer>
+<footer>7honteux®️ - {game.version}</footer>
 
 <style lang="scss">
 	nav {
