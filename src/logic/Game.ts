@@ -29,6 +29,8 @@ export interface choice {
 
 export type Score = { [category in Categories]: number };
 export class Game {
+	public version = "v0.0.5"
+
 	public score: Score;
 	private questionsSets: {[category in Categories]: Question[]};
 	public state: 'start' | 'playing' | 'end';
