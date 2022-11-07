@@ -1,6 +1,6 @@
 <script lang="ts">
-	import type { Question } from '../logic/Questions';
 	import { createEventDispatcher } from 'svelte';
+	import type { Question } from 'src/logic/Game';
 
 	export let question: Question;
 

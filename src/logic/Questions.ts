@@ -1,95 +1,252 @@
-export enum Categories {
-	SEX = 'SEX',
-	ALCOHOL = 'ALCOHOL',
-	DRUG = 'DRUG'
-}
+import type { Game, Question } from "./Game"
+import type { Categories } from "./Game"
 
-export enum QuestionType {
-	YES_NO,
-	NUMBER_RANGE,
-	CUSTOM
-}
-
-export class Question {
-	q: string;
-	category: Categories;
-	type: QuestionType;
-	choices: choice[];
-
-	constructor(q: string, category: Categories, type: QuestionType, choices: choice[]) {
-		this.q = q;
-		this.category = category;
-		this.type = type;
-		this.choices = choices;
+export const needFlagsCondition = (flags: string[]) => {
+	if(flags.length === 0) {
+		return (_:Game)=>true
 	}
+	return (game: Game) => {return flags.every(flag => {game.flags.includes(flag)})}
 }
 
-export interface choice {
-	text: string;
-	score: number;
+export const AlcoolQuestions: Question[] = [
+	{
+		q: "Avez-vous déjà goûté à l'alcool ?",
+		choices: [
+			{"text": "oui", "score": 1},
+			{"text": "non", "score": 0},
+		],
+		unlockFlag: "goute_alcool",
+	},
+	{
+		q: "Avez-vous déjà bu de l'alcool ?",
+		choices: [
+			{"text": "oui", "score": 1},
+			{"text": "non", "score": 0},
+		],
+		unlockFlag: "bu_alcool",
+		condition: needFlagsCondition(["goute_alcool"]),
+	},
+	{
+		q: "Avez-vous déjà été ivre ?",
+		choices: [
+			{"text": "oui", "score": 1},
+			{"text": "non", "score": 0},
+		],
+		condition: needFlagsCondition(["bu_alcool"]),
+	},
+	{
+		q: "Avez-vous déjà participé à des jeux à boire ?",
+		choices: [
+			{"text": "oui", "score": 1},
+			{"text": "non", "score": 0},
+		],
+		condition: needFlagsCondition(["bu_alcool"]),
+	},
+	{
+		q: "Avez-vous déjà bu assez pour vomir ? (À cause de l'alcool)",
+		choices: [
+			{"text": "oui", "score": 1},
+			{"text": "non", "score": 0},
+		],
+		condition: needFlagsCondition(["bu_alcool"]),
+	},
+	{
+		q: "Avez-vous déjà vomi sur vous ou sur quelqu'un d'autre ? (À cause de l'alcool)",
+		choices: [
+			{"text": "oui", "score": 1},
+			{"text": "non", "score": 0},
+		],
+		condition: needFlagsCondition(["bu_alcool"]),
+	},
+	{
+		q: "Vous êtes vous déjà fait sortir de force d'un bar ou d'une boîte de nuit ?",
+		choices: [
+			{"text": "oui", "score": 1},
+			{"text": "non", "score": 0},
+		],
+		condition: needFlagsCondition(["bu_alcool"]),
+	},
+	{
+		q: "Avez-vous déjà participé à un barathon ? (Tous les bars d'une ville ou d'une rue)",
+		choices: [
+			{"text": "oui", "score": 1},
+			{"text": "non", "score": 0},
+		],
+		condition: needFlagsCondition(["bu_alcool"]),
+	},
+	{
+		q: "Avez-vous déjà bu de l'alcool pour le petit-déjeuner ?",
+		choices: [
+			{"text": "oui", "score": 1},
+			{"text": "non", "score": 0},
+		],
+		condition: needFlagsCondition(["bu_alcool"]),
+	},
+	{
+		q: "Combien de fois buvez-vous de l'alcool par semaine ? (en moyenne)",
+		choices: [
+			{"text": "moins d'une fois", "score": 0},
+			{"text": "1", "score": 1},
+			{"text": "2", "score": 2},
+			{"text": "3", "score": 3},
+			{"text": "4", "score": 4},
+			{"text": "5", "score": 5},
+			{"text": "6", "score": 6},
+			{"text": "7", "score": 7},
+		],
+		condition: needFlagsCondition(["bu_alcool"]),
+	},
+	{
+		q: "Avez-vous déjà dormi dans des toilettes ? (À cause de l'alcool)",
+		choices: [
+			{"text": "oui", "score": 1},
+			{"text": "non", "score": 0},
+		],
+		unlockFlag: "dormi_toilettes_alcool",
+		condition: needFlagsCondition(["bu_alcool"]),
+	},
+	{
+		q: "Dans une boîte de nuit ?",
+		choices: [
+			{"text": "oui", "score": 1},
+			{"text": "non", "score": 0},
+		],
+		condition: needFlagsCondition(["bu_alcool", "dormi_toilettes_alcool"]),
+	},
+	{
+		q: "Avez-vous vous-même été volontairement à cet endroit pour dormir ?",
+		choices: [
+			{"text": "oui", "score": 1},
+			{"text": "non", "score": 0},
+		],
+		condition: needFlagsCondition(["bu_alcool", "dormi_toilettes_alcool"]),
+	},
+	{
+		q: "Vous-êtes vous déjà endormi(e) ou évanoui(e) dans un bar ou une boîte ?",
+		choices: [
+			{"text": "oui", "score": 1},
+			{"text": "non", "score": 0},
+		],
+		condition: needFlagsCondition(["bu_alcool"]),
+	},
+	{
+		q: "Avez-vous déjà chuté ? (À cause de l'alcool)",
+		choices: [
+			{"text": "oui", "score": 1},
+			{"text": "non", "score": 0},
+		],
+		unlockFlag: "chute_alcool",
+		condition: needFlagsCondition(["bu_alcool"]),
+	},
+	{
+		q: "Plusieurs fois ?",
+		choices: [
+			{"text": "oui", "score": 1},
+			{"text": "non", "score": 0},
+		],
+		condition: needFlagsCondition(["bu_alcool", "chute_alcool"]),
+	},
+	{
+		q: "Une ou plusieurs personnes ont-elles dû intervenir pour vous relever ?",
+		choices: [
+			{"text": "oui", "score": 1},
+			{"text": "non", "score": 0},
+		],
+		condition: needFlagsCondition(["bu_alcool","chute_alcool"]),
+	},
+	{
+		q: "Avez-vous déjà conduit une voiture (ou moto) en étant ivre ?",
+		choices: [
+			{"text": "oui", "score": 1},
+			{"text": "non", "score": 0},
+		],
+		unlockFlag: "conduit_alcool",
+		condition: needFlagsCondition(["bu_alcool"]),
+	},
+	{
+		q: "En respectant le code de la route ?",
+		choices: [
+			{"text": "oui", "score": 0},
+			{"text": "non", "score": 1},
+		],
+		condition: needFlagsCondition(["conduit_alcool","bu_alcool"]),
+	},
+	{
+		q: "Sans accident ?",
+		choices: [
+			{"text": "oui", "score": 1},
+			{"text": "non", "score": 0},
+		],
+		condition: needFlagsCondition(["conduit_alcool","bu_alcool"]),
+	},
+	{
+		q: "Avez-vous déjà pris un vélo en étant ivre ?",
+		choices: [
+			{"text": "oui", "score": 1},
+			{"text": "non", "score": 0},
+		],
+		unlockFlag: "velo_alcool",
+		condition: needFlagsCondition(["bu_alcool"]),
+	},
+	{
+		q: "Êtes-vous tombé(e) ?",
+		choices: [
+			{"text": "oui", "score": 1},
+			{"text": "non", "score": 0},
+		],
+		condition: needFlagsCondition(["velo_alcool","bu_alcool"]),
+	},
+	{
+    q: "Avez-vous déjà avalé votre vomi ou celui de quelqu'un d'autre ? (À cause de l'alcool)",
+    choices: [ { text: 'oui', score: 1 }, { text: 'non', score: 0 } ],
+		condition: needFlagsCondition(["bu_alcool"]),
+  },
+  {
+    q: 'Avez-vous déjà vomi dans un lieu public ?',
+    choices: [ { text: 'oui', score: 1 }, { text: 'non', score: 0 } ],
+		condition: needFlagsCondition(["bu_alcool"]),
+  },
+  {
+    q: 'Avez-vous déjà été en cours ivre ?',
+    choices: [ { text: 'oui', score: 1 }, { text: 'non', score: 0 } ],
+		condition: needFlagsCondition(["bu_alcool"]),
+  },
+  {
+    q: 'Avez-vous déjà été en partiel/exam ivre ?',
+    choices: [ { text: 'oui', score: 1 }, { text: 'non', score: 0 } ],
+		condition: needFlagsCondition(["bu_alcool"]),
+  }
+]
+
+export const MoraleQuestiosn: Question[] = [
+  {
+    q: "Avez-vous déjà ri du malheur de quelqu'un ?",
+    choices: [ { text: 'oui', score: 1 }, { text: 'non', score: 0 } ]
+  },
+  {
+    q: "Avez-vous déjà ri d'une personne mentalement ou physiquement handicapée ? (Sans connaître la personne)",
+    choices: [ { text: 'oui', score: 1 }, { text: 'non', score: 0 } ]
+  },
+  {
+    q: "Avez-vous déjà posé un lapin à quelqu'un ? (Rendez-vous amical, amoureux ou quelconque)",
+    choices: [ { text: 'oui', score: 1 }, { text: 'non', score: 0 } ]
+  },
+  {
+    q: "Avez-vous déjà jugé quelqu'un pour son apparence ?",
+    choices: [ { text: 'oui', score: 1 }, { text: 'non', score: 0 } ]
+  },
+  {
+    q: "Avez-vous déjà changé de trottoir à cause de l'apparence de quelqu'un ?",
+    choices: [ { text: 'oui', score: 1 }, { text: 'non', score: 0 } ]
+  },
+  {
+    q: 'Avez-vous déjà ignoré un sans-abri ?',
+    choices: [ { text: 'oui', score: 1 }, { text: 'non', score: 0 } ]
+  }
+]
+
+
+export const questions: { [category in Categories]: Question[] } = {
+	["ALCOOL"]: AlcoolQuestions,
+	["MORALE"]: MoraleQuestiosn,
 }
-
-export class YesNoQuestion implements Question {
-	q: string;
-	category: Categories;
-	type = QuestionType.YES_NO;
-	choices: [{ text: 'oui'; score: number }, { text: 'non'; score: 0 | number }];
-
-	constructor(
-		q: string,
-		category: Categories,
-		choices: [{ text: 'oui'; score: number }, { text: 'non'; score: 0 | number }]
-	) {
-		this.q = q;
-		this.category = category;
-		this.choices = choices;
-	}
-}
-
-export class NumberRangeQuestion implements Question {
-	q: string;
-	category: Categories;
-	type = QuestionType.NUMBER_RANGE;
-	choices: choice[];
-	range: [number, number];
-
-	constructor(
-		q: string,
-		category: Categories,
-		range: [number, number],
-		score: (i: number) => number,
-		outOfRangeScore: number
-	) {
-		this.q = q;
-		this.category = category;
-		this.range = range;
-		this.choices = new Array(range[1] - range[0]).fill(0).map((_, i) => {
-			return {
-				text: `${i + range[0]}`,
-				score: score(i)
-			};
-		});
-		this.choices.push({
-			text: `+ de ${range[1]}`,
-			score: outOfRangeScore
-		});
-	}
-}
-
-export const questions: Question[] = [
-	new YesNoQuestion("Avez vous déjà bu de l'alcool ?", Categories.ALCOHOL, [
-		{ text: 'oui', score: 1 },
-		{ text: 'non', score: 0 }
-	]),
-	new YesNoQuestion('Avez vous déjà été ivre ?', Categories.ALCOHOL, [
-		{ text: 'oui', score: 1 },
-		{ text: 'non', score: 0 }
-	]),
-	new NumberRangeQuestion(
-		'Combien de fois par semaine buvez vous ?',
-		Categories.ALCOHOL,
-		[0, 5],
-		(i) => i,
-		10
-	)
-];

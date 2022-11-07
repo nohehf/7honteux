@@ -31,7 +31,7 @@
 		<Results scores={game.score} />
 	{/if}
 </div>
-<footer>7honteux®️ - v0.0.3</footer>
+<footer>7honteux®️ - v0.0.4</footer>
 
 <style lang="scss">
 	nav {
