@@ -26,6 +26,11 @@
 		}
 		game = game
 	}
+
+	let showSubmitForm = true;
+	const closeSubmitForm = () => {
+		showSubmitForm = false;
+	}
 </script>
 
 <nav>
@@ -34,7 +39,6 @@
 
 <div class="wrapper">
 
-	<SubmitForm score={game.score} version={game.version}></SubmitForm>
 	{#if game.state === 'start'}
 		<button on:click={startGame}>START TEST</button>
 	{:else if game.state === 'playing' && game.currentQuestion}
@@ -44,7 +48,11 @@
 			<CompletionBar {completion} ></CompletionBar>
 		</div>
 	{:else if game.state === 'end'}
-		<Results scores={game.score} />
+		{#if showSubmitForm}
+			<SubmitForm on:close={closeSubmitForm} score={game.score} version={game.version} ></SubmitForm>
+		{:else}
+			<Results scores={game.score} />
+		{/if}	
 	{/if}
 </div>
 <footer>7honteux®️ - {game.version}</footer>
