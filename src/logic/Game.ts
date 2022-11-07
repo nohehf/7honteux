@@ -18,13 +18,13 @@ export interface Question {
 	q: string;
 	type?: QuestionType;
 	choices: choice[];
-	unlockFlag?: string;
 	condition?: (game: Game) => boolean;
 }
 
 export interface choice {
 	text: string;
 	score: number;
+	flag?: string;
 }
 
 export type Score = { [category in Categories]: number };
@@ -67,8 +67,9 @@ export class Game {
 			throw new Error('Out of range answer');
 		}
 		this.score[this.currentCategory!] += this.currentQuestion.choices[answer].score;
-		if(this.currentQuestion.unlockFlag) {
-			this.flags.push(this.currentQuestion.unlockFlag);
+		if(this.currentQuestion.choices[answer].flag) {
+			console.log('Adding flag: ' + this.currentQuestion.choices[answer].flag);
+			this.flags.push(this.currentQuestion.choices[answer].flag!);
 		}
 		this.nextQuestion();
 	}
@@ -88,6 +89,7 @@ export class Game {
 		this.currentQuestionIndex = nextQuestionIndex;
 
 		if(this.currentQuestion.condition && !this.currentQuestion.condition(this)) {
+			console.log("flags: "+ this.flags);
 			this.nextQuestion();
 		}
 	}

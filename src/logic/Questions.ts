@@ -5,25 +5,23 @@ export const needFlagsCondition = (flags: string[]) => {
 	if(flags.length === 0) {
 		return (_:Game)=>true
 	}
-	return (game: Game) => {return flags.every(flag => {game.flags.includes(flag)})}
+	return (game: Game) => {return flags.every(flag => {return game.flags.includes(flag)})}
 }
 
 export const AlcoolQuestions: Question[] = [
 	{
 		q: "Avez-vous déjà goûté à l'alcool ?",
 		choices: [
-			{"text": "oui", "score": 1},
+			{"text": "oui", "score": 1, flag: "goute_alcool"},
 			{"text": "non", "score": 0},
 		],
-		unlockFlag: "goute_alcool",
 	},
 	{
 		q: "Avez-vous déjà bu de l'alcool ?",
 		choices: [
-			{"text": "oui", "score": 1},
+			{"text": "oui", "score": 1, flag: "bu_alcool"},
 			{"text": "non", "score": 0},
 		],
-		unlockFlag: "bu_alcool",
 		condition: needFlagsCondition(["goute_alcool"]),
 	},
 	{
@@ -99,10 +97,9 @@ export const AlcoolQuestions: Question[] = [
 	{
 		q: "Avez-vous déjà dormi dans des toilettes ? (À cause de l'alcool)",
 		choices: [
-			{"text": "oui", "score": 1},
+			{"text": "oui", "score": 1, flag: "dormi_toilettes_alcool"},
 			{"text": "non", "score": 0},
 		],
-		unlockFlag: "dormi_toilettes_alcool",
 		condition: needFlagsCondition(["bu_alcool"]),
 	},
 	{
@@ -132,10 +129,9 @@ export const AlcoolQuestions: Question[] = [
 	{
 		q: "Avez-vous déjà chuté ? (À cause de l'alcool)",
 		choices: [
-			{"text": "oui", "score": 1},
+			{"text": "oui", "score": 1, flag: "chute_alcool"},
 			{"text": "non", "score": 0},
 		],
-		unlockFlag: "chute_alcool",
 		condition: needFlagsCondition(["bu_alcool"]),
 	},
 	{
@@ -157,10 +153,9 @@ export const AlcoolQuestions: Question[] = [
 	{
 		q: "Avez-vous déjà conduit une voiture (ou moto) en étant ivre ?",
 		choices: [
-			{"text": "oui", "score": 1},
+			{"text": "oui", "score": 1, flag: "conduit_alcool"},
 			{"text": "non", "score": 0},
 		],
-		unlockFlag: "conduit_alcool",
 		condition: needFlagsCondition(["bu_alcool"]),
 	},
 	{
@@ -182,10 +177,9 @@ export const AlcoolQuestions: Question[] = [
 	{
 		q: "Avez-vous déjà pris un vélo en étant ivre ?",
 		choices: [
-			{"text": "oui", "score": 1},
+			{"text": "oui", "score": 1, flag: "velo_alcool"},
 			{"text": "non", "score": 0},
 		],
-		unlockFlag: "velo_alcool",
 		condition: needFlagsCondition(["bu_alcool"]),
 	},
 	{
