@@ -212,7 +212,7 @@ export const AlcoolQuestions: Question[] = [
   }
 ]
 
-export const MoraleQuestiosn: Question[] = [
+export const MoraleQuestions: Question[] = [
   {
     q: "Avez-vous déjà ri du malheur de quelqu'un ?",
     choices: [ { text: 'oui', score: 1 }, { text: 'non', score: 0 } ]
@@ -242,5 +242,5 @@ export const MoraleQuestiosn: Question[] = [
 
 export const questions: { [category in Categories]: Question[] } = {
 	["ALCOOL"]: AlcoolQuestions,
-	["MORALE"]: MoraleQuestiosn,
+	["MORALE"]: MoraleQuestions,
 }

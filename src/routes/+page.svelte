@@ -4,6 +4,7 @@
 	import GameForm from '../components/game-form.svelte';
 	import logo from '../assets/logo.png';
 	import Results from '../components/results.svelte';
+	import CompletionBar from '../components/completion-bar.svelte';
 
 	$: game = new Game();
 
@@ -12,10 +13,18 @@
 		game = game;
 	};
 
-	const startGame = () => {
+	const startGame = () => {	
 		game.start();
 		game = game;
 	};
+
+	let completion = 0;
+	$: {
+		if(game.state === 'playing') {
+			completion = game.getCategoryCompletion()
+		}
+		game = game
+	}
 </script>
 
 <nav>
@@ -26,7 +35,11 @@
 	{#if game.state === 'start'}
 		<button on:click={startGame}>START TEST</button>
 	{:else if game.state === 'playing' && game.currentQuestion}
+		<h2 class="currentCategory">{game.currentCategory}</h2>
 		<GameForm question={game.currentQuestion} on:answer={handleAnswer} />
+		<div class="completionBar">
+			<CompletionBar {completion} ></CompletionBar>
+		</div>
 	{:else if game.state === 'end'}
 		<Results scores={game.score} />
 	{/if}
@@ -51,6 +64,11 @@
 		flex-direction: column;
 		align-items: center;
 		justify-content: center;
+
+		.completionBar {
+			padding: 3rem 5rem;
+			width: 100%;
+		}
 	}
 	footer {
 		position: absolute;

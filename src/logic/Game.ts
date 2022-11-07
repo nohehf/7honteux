@@ -115,4 +115,16 @@ export class Game {
 	end() {
 		this.state = 'end';
 	}
+
+	getCategoryCompletion() {
+		if (this.currentQuestionIndex === null) {
+			throw new Error('No current question');
+		}
+		return this.currentQuestionIndex / this.questions!.length;
+	}
+
+	getCategoryScore() {
+		return this.score[this.currentCategory!];
+	}
+
 }
