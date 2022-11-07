@@ -46,3 +46,11 @@ export const submitEntry = (score: Score, player: Player, game_version: string) 
     })
 }
 
+export const submitHelp = (content: string) => {
+  return supabase
+    .from('help')
+    .insert({
+      content,
+    })
+}
+
